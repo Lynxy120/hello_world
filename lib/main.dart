@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/pages/form_register.dart';
+import 'package:hello_world/pages/page_gambar1.dart';
+import 'package:hello_world/pages/page_gambar2.dart';
 import 'package:hello_world/pages/page_listview.dart';
 import 'package:hello_world/pages/page_row_column.dart';
 import 'package:hello_world/pages/page_simple_form.dart';
@@ -52,6 +55,51 @@ class PageUtama extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: Colors.deepOrange,
+      ),
+
+      drawer: SizedBox(
+        width: 250,
+        child: Drawer(
+          child: ListView(
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text("Arzhie Z"),
+                accountEmail: Text("arzhiez12@gmail.com"),
+                currentAccountPicture: CircleAvatar(
+                  radius: 55,
+                  child: Icon(Icons.person, color: Colors.lightBlue, size: 65),
+                ),
+              ),
+              ListTile(
+                title: Text("Wonhee"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PageGambar1()),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text("Rumah Gadang"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => PageGambar2()),
+                  );
+                },
+              ),
+              ListTile(
+                title: Text("Form Register"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FormRegister()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
       ),
 
       body: Center(
