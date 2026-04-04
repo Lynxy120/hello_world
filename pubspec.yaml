@@ -62,6 +62,7 @@ flutter:
   assets:
     - images/wonhee.jpg
     - images/
+    - lib/data/movies.json
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

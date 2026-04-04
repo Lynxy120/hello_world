@@ -1,0 +1,32 @@
+[
+  {
+    "title" : "Movie 2 Tensura",
+    "image" : "images/poster1.jpg",
+    "desc" : "Ini adalah Movie 1"
+  },
+  {
+    "title" : "Movie Konser Illit",
+    "image" : "images/poster2.webp",
+    "desc" : "Ini adalah Movie 2"
+  },
+  {
+    "title" : "Movie Avenger Doomsday",
+    "image" : "images/poster3.webp",
+    "desc" : "Ini adalah Movie 3"
+  },
+  {
+    "title" : "Movie Lord of The Ring",
+    "image" : "images/poster4.webp",
+    "desc" : "Ini adalah Movie 4"
+  },
+  {
+    "title" : "Movie Kimi no Nawa",
+    "image" : "images/poster5.webp",
+    "desc" : "Ini adalah Movie 5"
+  },
+  {
+    "title" : "Movie WorldTour BabyMonster",
+    "image" : "images/poster6.webp",
+    "desc" : "Ini adalah Movie 6"
+  }
+]

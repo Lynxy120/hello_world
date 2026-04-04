@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hello_world/pages/form_register.dart';
 import 'package:hello_world/pages/page_gambar1.dart';
 import 'package:hello_world/pages/page_gambar2.dart';
+import 'package:hello_world/pages/page_home_movie.dart';
 import 'package:hello_world/pages/page_listview.dart';
+import 'package:hello_world/pages/page_movie_grid.dart';
 import 'package:hello_world/pages/page_row_column.dart';
 import 'package:hello_world/pages/page_simple_form.dart';
 import 'package:hello_world/pages/page_start.dart';
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const PageSimpleForm(),
+      home: const PageMovieGrid(),
       debugShowCheckedModeBanner: false,
     );
   }
