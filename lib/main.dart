@@ -6,6 +6,7 @@ import 'package:hello_world/pages/page_home_movie.dart';
 import 'package:hello_world/pages/page_listview.dart';
 import 'package:hello_world/pages/page_movie_grid.dart';
 import 'package:hello_world/pages/page_row_column.dart';
+import 'package:hello_world/pages/page_search_listview.dart';
 import 'package:hello_world/pages/page_simple_form.dart';
 import 'package:hello_world/pages/page_start.dart';
 
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const PageMovieGrid(),
+      home: const PageSearchListview(),
       debugShowCheckedModeBanner: false,
     );
   }
