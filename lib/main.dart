@@ -4,6 +4,7 @@ import 'package:hello_world/pages/page_gambar1.dart';
 import 'package:hello_world/pages/page_gambar2.dart';
 import 'package:hello_world/pages/page_home_movie.dart';
 import 'package:hello_world/pages/page_listview.dart';
+import 'package:hello_world/pages/page_maps.dart';
 import 'package:hello_world/pages/page_movie_grid.dart';
 import 'package:hello_world/pages/page_photos_json.dart';
 import 'package:hello_world/pages/page_row_column.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const PageUsersJson(),
+      home: const PageMainMaps(),
       debugShowCheckedModeBanner: false,
     );
   }
