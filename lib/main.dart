@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/helper/session_manager.dart';
 import 'package:hello_world/pages/form_register.dart';
 import 'package:hello_world/pages/page_gambar1.dart';
 import 'package:hello_world/pages/page_gambar2.dart';
@@ -46,7 +47,30 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const PageLogin(),
+      // gunakan future builder utk cek session login
+      home: FutureBuilder(future: SessionManager.isLogin(), builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+        if(snapshot.hasData && snapshot.data == true) {
+          return FutureBuilder<Map<String, String?>> (
+            future: SessionManager.getUserSession(),
+            builder: (context, userSnapshot) {
+              if (userSnapshot.connectionState == ConnectionState.waiting) {
+                return Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              }
+              final userData = Map<String, dynamic>.from(userSnapshot.data ?? {});
+              return PageListBerita();
+            },
+          );
+        }
+        return PageLogin();
+      }),
+      // home: const PageLogin(),
       debugShowCheckedModeBanner: false,
     );
   }

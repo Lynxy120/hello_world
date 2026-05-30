@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:hello_world/helper/session_manager.dart';
 import 'package:hello_world/pages/page_list_berita.dart';
 import 'package:hello_world/pages/page_register.dart';
 import 'package:hello_world/services/api_service.dart';
@@ -41,6 +42,7 @@ class _PageLoginState extends State<PageLogin> {
       final data = jsonDecode(response.body);
       if (data['is_success'] == true) {
         _showSnackBar("Login berhasil");
+        await SessionManager.saveUserSession(data['data']);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PageListBerita()),
@@ -57,7 +59,19 @@ class _PageLoginState extends State<PageLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Login"), backgroundColor: Colors.blue),
+      appBar: AppBar(title: Text("Login"), backgroundColor: Colors.blue,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.exit_to_app),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PageRegister()),
+              );
+            },
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

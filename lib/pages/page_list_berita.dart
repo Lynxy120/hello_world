@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/helper/session_manager.dart';
 import 'package:hello_world/pages/page_detail_berita.dart';
 import 'package:hello_world/services/api_service.dart';
 import 'package:flutter/foundation.dart';
@@ -20,11 +21,27 @@ class _PageListBeritaState extends State<PageListBerita> {
 
   final TextEditingController _searchCtrl = TextEditingController();
 
+  String? username;
+  String? email;
+  String? id;
+  String? tglDaftar;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     futureBerita = ApiService.getDataBerita();
+    _loadUserData();
+  }
+
+  void _loadUserData() async{
+    final userData = await SessionManager.getUserSession();
+    setState(() {
+      username = userData['username'];
+      email = userData['email'];
+      id = userData['id'];
+      tglDaftar = userData['tgl_daftar'];
+    });
   }
 
   @override
@@ -51,7 +68,7 @@ class _PageListBeritaState extends State<PageListBerita> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('List Berita'),
+        title: Text(username != null ? "Selamat datang, $username" : "Daftar Berita"),
         backgroundColor: Colors.lightBlue,
       ),
       body: FutureBuilder(
@@ -173,7 +190,7 @@ Widget _buildBeritaCard(BuildContext context, Datum berita) {
               topRight: Radius.circular(10),
             ),
             child: Image.network(
-              "http://10.44.130.1:3000/${berita.gambar}",
+              "${ApiService.urlGambarBerita}/${berita.gambar}",
               webHtmlElementStrategy: WebHtmlElementStrategy
                   .prefer, //agar bisa keluar gambar di web
               height: 200,
