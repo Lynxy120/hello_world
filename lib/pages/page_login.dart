@@ -7,6 +7,10 @@ import 'package:hello_world/pages/page_register.dart';
 import 'package:hello_world/services/api_service.dart';
 import 'package:http/http.dart' as http;
 
+//akses login
+// ketika login sebagai admin --> CRUD data berita
+// ketika login as user --> hanya bisa lihat data berita
+
 class PageLogin extends StatefulWidget {
   const PageLogin({super.key});
 
@@ -43,6 +47,10 @@ class _PageLoginState extends State<PageLogin> {
       if (data['is_success'] == true) {
         _showSnackBar("Login berhasil");
         await SessionManager.saveUserSession(data['data']);
+        if (!mounted) return;
+        _showSnackBar(
+          "Login berhasil, selamat datang ${data['data']['username']}",
+        );
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => PageListBerita()),
@@ -59,7 +67,9 @@ class _PageLoginState extends State<PageLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Login"), backgroundColor: Colors.blue,
+      appBar: AppBar(
+        title: Text("Login"),
+        backgroundColor: Colors.blue,
         actions: [
           IconButton(
             icon: const Icon(Icons.exit_to_app),
@@ -69,7 +79,7 @@ class _PageLoginState extends State<PageLogin> {
                 MaterialPageRoute(builder: (context) => PageRegister()),
               );
             },
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(

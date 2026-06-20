@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/helper/session_manager.dart';
 import 'package:hello_world/pages/page_detail_berita.dart';
+import 'package:hello_world/pages/page_insert_berita.dart';
+import 'package:hello_world/pages/page_login.dart';
 import 'package:hello_world/services/api_service.dart';
 import 'package:flutter/foundation.dart';
 
@@ -25,6 +27,7 @@ class _PageListBeritaState extends State<PageListBerita> {
   String? email;
   String? id;
   String? tglDaftar;
+  String? level;
 
   @override
   void initState() {
@@ -34,13 +37,14 @@ class _PageListBeritaState extends State<PageListBerita> {
     _loadUserData();
   }
 
-  void _loadUserData() async{
+  void _loadUserData() async {
     final userData = await SessionManager.getUserSession();
     setState(() {
       username = userData['username'];
       email = userData['email'];
       id = userData['id'];
       tglDaftar = userData['tgl_daftar'];
+      level = userData['level'];
     });
   }
 
@@ -66,10 +70,29 @@ class _PageListBeritaState extends State<PageListBerita> {
 
   @override
   Widget build(BuildContext context) {
+    final isAdmin = level == 'admin';
     return Scaffold(
       appBar: AppBar(
-        title: Text(username != null ? "Selamat datang, $username" : "Daftar Berita"),
+        title: Text(
+          username != null ? "Selamat datang, $username" : "Daftar Berita",
+        ),
         backgroundColor: Colors.lightBlue,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await SessionManager.logout();
+
+              if (context.mounted) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => const PageLogin()),
+                  (route) => false,
+                );
+              }
+            },
+          ),
+        ],
       ),
       body: FutureBuilder(
         future: futureBerita,
@@ -154,6 +177,7 @@ class _PageListBeritaState extends State<PageListBerita> {
                             return _buildBeritaCard(
                               context,
                               _filteredBerita[index],
+                              isAdmin,
                             );
                           },
                         ),
@@ -163,11 +187,32 @@ class _PageListBeritaState extends State<PageListBerita> {
           );
         },
       ),
+      floatingActionButton: isAdmin
+          ? FloatingActionButton(
+              backgroundColor: Colors.lightBlue,
+              child: const Icon(Icons.add),
+              onPressed: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PageInsertBerita(),
+                  ),
+                );
+
+                if (result == true) {
+                  setState(() {
+                    _allBerita.clear();
+                    futureBerita = ApiService.getDataBerita();
+                  });
+                }
+              },
+            )
+          : null, //kalu bukan admin button ini gk muncul
     );
   }
 }
 
-Widget _buildBeritaCard(BuildContext context, Datum berita) {
+Widget _buildBeritaCard(BuildContext context, Datum berita, bool isAdmin) {
   return Card(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     elevation: 3,
@@ -191,8 +236,7 @@ Widget _buildBeritaCard(BuildContext context, Datum berita) {
             ),
             child: Image.network(
               "${ApiService.urlGambarBerita}/${berita.gambar}",
-              webHtmlElementStrategy: WebHtmlElementStrategy
-                  .prefer, //agar bisa keluar gambar di web
+              webHtmlElementStrategy: WebHtmlElementStrategy.prefer,
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,

@@ -6,11 +6,13 @@ import '../models/model_berita.dart';
 
 class ApiService {
   static const String urlPhotos = "https://jsonplaceholder.typicode.com/photos";
+  static const String baseUrl = "http://10.77.243.1:3000";
 
-  static const String urlGambarBerita = "http://10.195.80.1:3000/images";
-  static const String urlGetBerita = "http://10.195.80.1:3000/getBerita.php";
-  static const String urlRegister = "http://10.195.80.1:3000/register.php";
-  static const String urlLogin = "http://10.195.80.1:3000/login.php";
+  static const String urlGambarBerita = "${baseUrl}/images";
+  static const String urlGetBerita = "${baseUrl}/getBerita.php";
+  static const String urlRegister = "${baseUrl}/register.php";
+  static const String urlLogin = "${baseUrl}/login.php";
+  static const String urlPostBerita = "${baseUrl}/postBerita.php";
 
   static Future<List<ModelPhotos>> fetchDataPhotos() async {
     final response = await http.get(Uri.parse(urlPhotos));
